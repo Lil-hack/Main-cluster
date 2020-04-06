@@ -208,11 +208,12 @@ def timer_start():
         print(ex)
         get()
 
-
+get()
+threading.Timer(120.0, timer_start).start()
+threading.Timer(20.0, timer_transac).start()
 # timer_transac()
 # timer_start()
 if __name__ == '__main__':
-    threading.Timer(120.0, timer_start).start()
-    threading.Timer(20.0, timer_transac).start()
+
     app.run()
 

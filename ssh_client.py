@@ -10,6 +10,7 @@ path = os.path.dirname(os.path.abspath(__file__))+'/'
 
 def send():
     try:
+        print('i send')
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         client.connect(hostname=host, username=user, password=secret, port=port)
@@ -21,6 +22,7 @@ def send():
         get()
 
 def get():
+    print('i get')
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect(hostname=host, username=user, password=secret, port=port)
