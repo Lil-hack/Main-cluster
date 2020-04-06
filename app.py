@@ -3,6 +3,7 @@ import threading
 import os
 from flask import Flask, jsonify, g
 import sqlite3
+import requests
 
 try:
     from ssh_client import send, get
@@ -17,6 +18,7 @@ LIFE=10
 KILL=5
 WIN=50
 
+TOKEN='UFSv7R04U9USUNNNl7WyPTffdSw2TzlvC6znuTnHl68rpZgpUgeN0H358S0Z'
 
 
 def get_db():
@@ -191,6 +193,12 @@ def reg(name,password):
        print(ex)
        return 'ER'
 
+def timer_transac():
+    threading.Timer(20.0, timer_transac).start()
+    print('trans')
+    response = requests.get('https://donatepay.ru/api/v1/transactions?access_token={}'.format(TOKEN))
+    print(response.json())
+
 def timer_start():
     threading.Timer(120.0, timer_start).start()
     print('start')
@@ -200,8 +208,11 @@ def timer_start():
         print(ex)
         get()
 
-timer_start()
-if __name__ == '__main__':
 
+# timer_transac()
+# timer_start()
+if __name__ == '__main__':
+    threading.Timer(120.0, timer_start).start()
+    threading.Timer(20.0, timer_transac).start()
     app.run()
 
