@@ -200,7 +200,7 @@ def timer_start():
         print(ex)
         get()
 
-timer_start()
+
 if __name__ == '__main__':
 
     app.run()
