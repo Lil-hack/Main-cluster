@@ -202,6 +202,5 @@ def timer_start():
 timer_start()
 if __name__ == '__main__':
 
-    send()
     app.run()
 
