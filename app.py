@@ -4,9 +4,10 @@ import os
 from flask import Flask, jsonify, g
 import sqlite3
 
-
-from ssh_client import send
-
+try:
+    from ssh_client import send
+except:
+    print('no paramilo')
 app = Flask(__name__)
 
 file_name='minecraft.db'
@@ -191,16 +192,16 @@ def reg(name,password):
        return 'ER'
 
 def timer_start():
-    threading.Timer(20.0, timer_start).start()
+    threading.Timer(120.0, timer_start).start()
     print('start')
     try:
         send()
     except Exception as ex:
         print(ex)
 
-
+timer_start()
 if __name__ == '__main__':
 
-    timer_start()
+    send()
     app.run()
 
