@@ -5,7 +5,7 @@ from flask import Flask, jsonify, g
 import sqlite3
 
 try:
-    from ssh_client import send
+    from ssh_client import send, get
 except:
     print('no paramilo')
 app = Flask(__name__)
@@ -198,6 +198,7 @@ def timer_start():
         send()
     except Exception as ex:
         print(ex)
+        get()
 
 timer_start()
 if __name__ == '__main__':
