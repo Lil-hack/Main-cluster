@@ -4,10 +4,9 @@ import os
 from flask import Flask, jsonify, g
 import sqlite3
 
-try:
-    from ssh_client import send
-except:
-    print('no paramilo')
+
+from ssh_client import send
+
 app = Flask(__name__)
 
 file_name='minecraft.db'
