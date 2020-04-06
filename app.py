@@ -20,7 +20,8 @@ WIN=50
 
 TOKEN='UFSv7R04U9USUNNNl7WyPTffdSw2TzlvC6znuTnHl68rpZgpUgeN0H358S0Z'
 
-
+ERROR={"status":"Error"}
+OK={"status":"Ok"}
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -41,16 +42,7 @@ def create_db():
     cursor.execute("INSERT INTO users VALUES ('1234', 'eee', 0,0,0,0,0)")
     db.commit()
 
-def save_to_file():
-    db = get_db()
-    cursor = db.cursor()
-    sql = "SELECT * FROM users "
-    cursor.execute(sql)
-    data = cursor.fetchall()
-    str_data = json.dumps(data)
-    print(str_data)
-    with open('users.txt', 'w') as file:
-        file.write(str_data)
+
 
 
 
@@ -60,7 +52,7 @@ def homepage():
         return "hello"
     except Exception as ex:
         print(ex)
-        return 'ER'
+        return ERROR
 
 @app.route('/all')
 def homepage2():
@@ -68,8 +60,8 @@ def homepage2():
     cursor=get_db().cursor()
     cursor.execute(sql)
     data = cursor.fetchall()
-    str_data = json.dumps(data)
-    print(str_data)
+    str_data = json.dumps(db_to_json(data))
+
     return str_data
 
 @app.route('/kill/<name>')
@@ -86,10 +78,10 @@ def add_kill(name):
        sql = "UPDATE users SET kills = {} WHERE name ='{}'".format(data[5]+1, name)
        cursor.execute(sql)
        db.commit()
-       return 'OK'
+       return OK
    except Exception as ex:
        print(ex)
-       return 'ER'
+       return ERROR
 
 @app.route('/check/<name>')
 def check(name):
@@ -100,12 +92,12 @@ def check(name):
        cursor.execute(sql_user)
        data= cursor.fetchone()
        if data[2]>=LIFE:
-         return 'OK'
+         return OK
        else:
-         return 'ER'
+         return ERROR
    except Exception as ex:
        print(ex)
-       return 'ER'
+       return ERROR
 
 @app.route('/win/<name>')
 def win(name):
@@ -121,10 +113,10 @@ def win(name):
        sql = "UPDATE users SET wins = {} WHERE name ='{}'".format(data[4]+1, name)
        cursor.execute(sql)
        db.commit()
-       return 'OK'
+       return OK
    except Exception as ex:
        print(ex)
-       return 'ER'
+       return ERROR
 
 @app.route('/die/<name>')
 def die(name):
@@ -140,10 +132,10 @@ def die(name):
        sql_money = "UPDATE users SET dies = {} WHERE name ='{}'".format(data[6] + 1, name)
        cursor.execute(sql_money)
        db.commit()
-       return 'OK'
+       return OK
    except Exception as ex:
        print(ex)
-       return 'ER'
+       return ERROR
 
 @app.route('/getinfo/<name>')
 def getinfo(name):
@@ -153,12 +145,14 @@ def getinfo(name):
        sql_user = "SELECT * FROM users where name='{}'".format(name)
        cursor.execute(sql_user)
        data= cursor.fetchone()
+
        if data is None:
-           return 'ER'
-       return jsonify(data)
+           return ERROR
+       str_data = json.dumps(db_to_json([data]))
+       return str_data
    except Exception as ex:
        print(ex)
-       return 'ER'
+       return ERROR
 
 @app.route('/login/<name>&<password>')
 def login(name,password):
@@ -169,11 +163,12 @@ def login(name,password):
        cursor.execute(sql_user)
        data= cursor.fetchone()
        if data is None:
-           return 'ER'
-       return jsonify(data)
+           return ERROR
+       str_data = json.dumps(db_to_json([data]))
+       return str_data
    except Exception as ex:
        print(ex)
-       return 'ER'
+       return ERROR
 
 @app.route('/reg/<name>&<password>')
 def reg(name,password):
@@ -187,11 +182,21 @@ def reg(name,password):
            cursor = db.cursor()
            cursor.execute("INSERT INTO users VALUES ('{}', '{}', 0,0,0,0,0)".format(name,password))
            db.commit()
-           return 'OK'
-       return 'ER'
+           return OK
+       return ERROR
    except Exception as ex:
        print(ex)
-       return 'ER'
+       return ERROR
+
+
+def db_to_json(data):
+    json_list = []
+    json_output = {'users': json_list}
+
+    for row in data:
+        json_dict = {'name': row[0], 'password': row[1], 'money': row[2], 'life': row[3], 'wins': row[4], 'kills': row[5], 'dies': row[6]}
+        json_list.append(json_dict)
+    return json_output
 
 def timer_transac():
     threading.Timer(20.0, timer_transac).start()
