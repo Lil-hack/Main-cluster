@@ -192,7 +192,7 @@ def reg(name,password):
        return 'ER'
 
 def timer_start():
-    threading.Timer(10.0, timer_start).start()
+    threading.Timer(120.0, timer_start).start()
     print('start')
     try:
         send()
@@ -200,7 +200,7 @@ def timer_start():
         print(ex)
         get()
 
-
+timer_start()
 if __name__ == '__main__':
 
     app.run()
