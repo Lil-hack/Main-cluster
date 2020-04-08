@@ -1,6 +1,9 @@
 import json
 import threading
 import os
+import time
+from multiprocessing import Process, Manager
+
 from flask import Flask, jsonify, g, request
 import sqlite3
 import requests
@@ -22,6 +25,7 @@ TOKEN='UFSv7R04U9USUNNNl7WyPTffdSw2TzlvC6znuTnHl68rpZgpUgeN0H358S0Z'
 
 ERROR={"status":"Error"}
 OK={"status":"Ok"}
+p=9
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -107,7 +111,7 @@ def win(name,money):
        sql_user = "SELECT * FROM users where name='{}'".format(name)
        cursor.execute(sql_user)
        data= cursor.fetchone()
-       sql_money = "UPDATE users SET money = {} WHERE name ='{}'".format(data[2] + money, name)
+       sql_money = "UPDATE users SET money = {} WHERE name ='{}'".format(data[2] + int(money), name)
        cursor.execute(sql_money)
        db.commit()
        sql = "UPDATE users SET wins = {} WHERE name ='{}'".format(data[4]+1, name)
@@ -215,10 +219,18 @@ def db_to_json(data):
     return json_output
 
 def timer_transac():
-    threading.Timer(20.0, timer_transac).start()
-    print('trans')
+    threading.Timer(10.0, timer_transac).start()
+
     response = requests.get('https://donatepay.ru/api/v1/transactions?access_token={}'.format(TOKEN))
-    print(response.json())
+    json=response.json()
+    if json['status'] != 'success':
+        return
+
+    for data in json['data']:
+        print(data)
+    # json.dumps
+    # last_id=json['data'][0]['id']
+    print()
 
 def timer_start():
     threading.Timer(120.0, timer_start).start()
@@ -231,10 +243,12 @@ def timer_start():
 
 get()
 threading.Timer(120.0, timer_start).start()
-threading.Timer(20.0, timer_transac).start()
+threading.Timer(5.0, timer_transac).start()
 # timer_transac()
 # timer_start()
 if __name__ == '__main__':
-
+    manager = Manager()
+    last_id = manager.dict()
+    last_id.update({'id':9})
     app.run()
 
