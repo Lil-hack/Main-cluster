@@ -1,7 +1,7 @@
 import json
 import threading
 import os
-from flask import Flask, jsonify, g
+from flask import Flask, jsonify, g, request
 import sqlite3
 import requests
 
@@ -99,15 +99,15 @@ def check(name):
        print(ex)
        return ERROR
 
-@app.route('/win/<name>')
-def win(name):
+@app.route('/win/<name>&<money>')
+def win(name,money):
    try:
        db = get_db()
        cursor = db.cursor()
        sql_user = "SELECT * FROM users where name='{}'".format(name)
        cursor.execute(sql_user)
        data= cursor.fetchone()
-       sql_money = "UPDATE users SET money = {} WHERE name ='{}'".format(data[2] + WIN, name)
+       sql_money = "UPDATE users SET money = {} WHERE name ='{}'".format(data[2] + money, name)
        cursor.execute(sql_money)
        db.commit()
        sql = "UPDATE users SET wins = {} WHERE name ='{}'".format(data[4]+1, name)
@@ -137,18 +137,34 @@ def die(name):
        print(ex)
        return ERROR
 
-@app.route('/getinfo/<name>')
-def getinfo(name):
+@app.route('/getinfo/')
+def getinfo():
+   list_user=[]
    try:
+       for i in range(1,30):
+          user=request.args.get(f'name{i}')
+          if user is not None:
+            list_user.insert(i-1,user)
+            print(user)
+          else:
+              break
+
        db = get_db()
        cursor = db.cursor()
-       sql_user = "SELECT * FROM users where name='{}'".format(name)
+       sql_user = "SELECT * FROM users where "
+       list_size=len(list_user)
+       for i in range(0,list_size):
+           if i!=list_size-1:
+                sql_user=sql_user+"name='{}' or ".format(list_user[i])
+           else:
+               sql_user = sql_user + "name='{}' ".format(list_user[i])
+       print(sql_user)
        cursor.execute(sql_user)
-       data= cursor.fetchone()
+       data= cursor.fetchall()
 
        if data is None:
            return ERROR
-       str_data = json.dumps(db_to_json([data]))
+       str_data = json.dumps(db_to_json(data))
        return str_data
    except Exception as ex:
        print(ex)
