@@ -231,7 +231,7 @@ def timer_transac():
         json_pay=response.json()
         if json_pay['status'] != 'success':
             return
-
+        print(json_pay['data'])
         if pay['pay_id'] == 0:
             last_id = json_pay['data'][0]['id']
         else:
@@ -245,12 +245,12 @@ def timer_transac():
                 with app.app_context():
                     db = get_db()
                     cursor = db.cursor()
-                    sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(data['to_pay'], data['what'])
+                    sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(int(data['to_pay']), data['what'])
                     cursor.execute(sql_money)
                     db.commit()
 
 
-        print(json_pay['data'])
+
         to_json = {'pay_id': last_id}
         with open('pay.json', 'w') as f:
             json.dump(to_json, f)
