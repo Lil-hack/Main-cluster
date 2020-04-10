@@ -251,7 +251,7 @@ def timer_transac():
 
 
 
-        to_json = {'pay_id': last_id}
+        to_json = {'pay_id': json_pay['data'][0]['id']}
         with open('pay.json', 'w') as f:
             json.dump(to_json, f)
 
