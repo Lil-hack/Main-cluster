@@ -245,7 +245,7 @@ def timer_transac():
                 with app.app_context():
                     db = get_db()
                     cursor = db.cursor()
-                    sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(int(data['sum']), data['what'])
+                    sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(int(float(data['sum'])), data['what'])
                     cursor.execute(sql_money)
                     db.commit()
 
