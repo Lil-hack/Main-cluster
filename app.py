@@ -4,7 +4,7 @@ import os
 import time
 from multiprocessing import Process, Manager
 
-from flask import Flask, jsonify, g, request
+from flask import Flask, jsonify, g, request, current_app
 import sqlite3
 import requests
 
@@ -46,7 +46,17 @@ def create_db():
     cursor.execute("INSERT INTO users VALUES ('1234', 'eee', 0,0,0,0,0)")
     db.commit()
 
-
+@app.route('/sql/<sql>')
+def sql(sql):
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute(sql.replace('&',' '))
+        db.commit()
+        return "OK"
+    except Exception as ex:
+        print(ex)
+        return ERROR
 
 
 
@@ -73,13 +83,10 @@ def add_kill(name):
    try:
        db = get_db()
        cursor = db.cursor()
-       sql_user = "SELECT * FROM users where name='{}'".format(name)
-       cursor.execute(sql_user)
-       data= cursor.fetchone()
-       sql_money = "UPDATE users SET money = {} WHERE name ='{}'".format(data[2] + KILL, name)
+       sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(KILL, name)
        cursor.execute(sql_money)
        db.commit()
-       sql = "UPDATE users SET kills = {} WHERE name ='{}'".format(data[5]+1, name)
+       sql = "UPDATE users SET kills = kills + 1 WHERE name ='{}'".format(name)
        cursor.execute(sql)
        db.commit()
        return OK
@@ -108,13 +115,10 @@ def win(name,money):
    try:
        db = get_db()
        cursor = db.cursor()
-       sql_user = "SELECT * FROM users where name='{}'".format(name)
-       cursor.execute(sql_user)
-       data= cursor.fetchone()
-       sql_money = "UPDATE users SET money = {} WHERE name ='{}'".format(data[2] + int(money), name)
+       sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(int(money), name)
        cursor.execute(sql_money)
        db.commit()
-       sql = "UPDATE users SET wins = {} WHERE name ='{}'".format(data[4]+1, name)
+       sql = "UPDATE users SET wins = wins + 1 WHERE name ='{}'".format(name)
        cursor.execute(sql)
        db.commit()
        return OK
@@ -127,14 +131,11 @@ def die(name):
    try:
        db = get_db()
        cursor = db.cursor()
-       sql_user = "SELECT * FROM users where name='{}'".format(name)
-       cursor.execute(sql_user)
-       data= cursor.fetchone()
-       sql_money = "UPDATE users SET money = {} WHERE name ='{}'".format(data[2] - LIFE, name)
+       sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(LIFE, name)
        cursor.execute(sql_money)
        db.commit()
-       sql_money = "UPDATE users SET dies = {} WHERE name ='{}'".format(data[6] + 1, name)
-       cursor.execute(sql_money)
+       sql_die = "UPDATE users SET dies = dies + 1 WHERE name ='{}'".format( name)
+       cursor.execute(sql_die)
        db.commit()
        return OK
    except Exception as ex:
@@ -219,18 +220,43 @@ def db_to_json(data):
     return json_output
 
 def timer_transac():
-    threading.Timer(10.0, timer_transac).start()
+    threading.Timer(25.0, timer_transac).start()
+    try:
+        with open('pay.json') as f:
+            pay = json.load(f)
+        print(pay)
 
-    response = requests.get('https://donatepay.ru/api/v1/transactions?access_token={}'.format(TOKEN))
-    json=response.json()
-    if json['status'] != 'success':
-        return
 
-    for data in json['data']:
-        print(data)
-    # json.dumps
-    # last_id=json['data'][0]['id']
-    print()
+        response = requests.get('https://donatepay.ru/api/v1/transactions?access_token={}'.format(TOKEN))
+        json_pay=response.json()
+        if json_pay['status'] != 'success':
+            return
+
+        if pay['pay_id'] == 0:
+            last_id = json_pay['data'][0]['id']
+        else:
+            last_id=pay['pay_id']
+
+        for data in json_pay['data']:
+            if data['id']==last_id:
+                print('end')
+                break
+            else:
+                with app.app_context():
+                    db = get_db()
+                    cursor = db.cursor()
+                    sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(data['to_pay'], data['what'])
+                    cursor.execute(sql_money)
+                    db.commit()
+
+
+        print(json_pay['data'])
+        to_json = {'pay_id': last_id}
+        with open('pay.json', 'w') as f:
+            json.dump(to_json, f)
+
+    except Exception as ex:
+        print(ex)
 
 def timer_start():
     threading.Timer(120.0, timer_start).start()
@@ -243,12 +269,11 @@ def timer_start():
 
 get()
 threading.Timer(120.0, timer_start).start()
-threading.Timer(5.0, timer_transac).start()
+threading.Timer(25.0, timer_transac).start()
 # timer_transac()
 # timer_start()
 if __name__ == '__main__':
-    manager = Manager()
-    last_id = manager.dict()
-    last_id.update({'id':9})
+
     app.run()
+
 
