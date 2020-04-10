@@ -243,12 +243,19 @@ def timer_transac():
                 break
             else:
                 with app.app_context():
-                    db = get_db()
-                    cursor = db.cursor()
-                    sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(int(float(data['sum'])), data['what'])
-                    cursor.execute(sql_money)
-                    db.commit()
-
+                    if data['comment']=='':
+                        db = get_db()
+                        cursor = db.cursor()
+                        sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(int(float(data['sum'])), data['what'])
+                        cursor.execute(sql_money)
+                        db.commit()
+                    else:
+                        db = get_db()
+                        cursor = db.cursor()
+                        sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(
+                            int(float(data['sum'])), data['comment'])
+                        cursor.execute(sql_money)
+                        db.commit()
 
 
         to_json = {'pay_id': json_pay['data'][0]['id']}
