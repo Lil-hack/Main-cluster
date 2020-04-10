@@ -220,11 +220,11 @@ def db_to_json(data):
     return json_output
 
 def timer_transac():
-    threading.Timer(25.0, timer_transac).start()
+    threading.Timer(60.0, timer_transac).start()
     try:
         with open('pay.json') as f:
             pay = json.load(f)
-        print(pay)
+        # print(pay)
 
 
         response = requests.get('https://donatepay.ru/api/v1/transactions?access_token={}'.format(TOKEN))
