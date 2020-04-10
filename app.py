@@ -249,6 +249,7 @@ def timer_transac():
                         sql_money = "UPDATE users SET money = money + {} WHERE name ='{}'".format(int(float(data['sum'])), data['what'])
                         cursor.execute(sql_money)
                         db.commit()
+                        print('UserName {} sum= {}'.format( data['what'],int(float(data['sum']))))
                     else:
                         db = get_db()
                         cursor = db.cursor()
@@ -256,6 +257,7 @@ def timer_transac():
                             int(float(data['sum'])), data['comment'])
                         cursor.execute(sql_money)
                         db.commit()
+                        print('CommentName {} sum= {}'.format(data['what'], int(float(data['sum']))))
 
 
         to_json = {'pay_id': json_pay['data'][0]['id']}
