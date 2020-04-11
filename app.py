@@ -1,8 +1,6 @@
 import json
 import threading
 import os
-import time
-from multiprocessing import Process, Manager
 
 from flask import Flask, jsonify, g, request, current_app
 import sqlite3
@@ -220,7 +218,7 @@ def db_to_json(data):
     return json_output
 
 def timer_transac():
-    threading.Timer(60.0, timer_transac).start()
+    threading.Timer(30.0, timer_transac).start()
     try:
         with open('pay.json') as f:
             pay = json.load(f)
@@ -231,7 +229,7 @@ def timer_transac():
         json_pay=response.json()
         if json_pay['status'] != 'success':
             return
-        print(json_pay)
+        # print(json_pay)
         if pay['pay_id'] == 0:
             last_id = json_pay['data'][0]['id']
         else:
