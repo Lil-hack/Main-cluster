@@ -42,6 +42,8 @@ def create_db():
     cursor = db.cursor()
     cursor.execute("CREATE TABLE users (name TEXT , password TEXT, money INTEGER, life INTEGER, wins INTEGER ,kills INTEGER, dies INTEGER)")
     cursor.execute("INSERT INTO users VALUES ('1234', 'eee', 0,0,0,0,0)")
+    cursor.execute("CREATE&TABLE&servers&(ip&TEXT,port&INTEGER,state&INTEGER)")
+    cursor.execute("INSERT&INTO&servers&VALUES&('1234',13,0)")
     db.commit()
 
 @app.route('/sql/<sql>')
@@ -75,6 +77,28 @@ def homepage2():
     str_data = json.dumps(db_to_json(data))
 
     return str_data
+
+@app.route('/servers/<state>')
+def servers(state):
+    sql = "SELECT * FROM servers where state={}".format(state)
+    cursor=get_db().cursor()
+    cursor.execute(sql)
+    data = cursor.fetchall()
+    str_data = json.dumps(db_to_json_serv(data))
+    return str_data
+
+@app.route('/state/<ip>&<state>')
+def change_state_servers(ip,state):
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        sql_money = "UPDATE servers SET state = {} WHERE ip ='{}'".format(state, ip)
+        cursor.execute(sql_money)
+        db.commit()
+        return OK
+    except Exception as ex:
+        print(ex)
+        return ERROR
 
 @app.route('/kill/<name>')
 def add_kill(name):
@@ -217,14 +241,21 @@ def db_to_json(data):
         json_list.append(json_dict)
     return json_output
 
+def db_to_json_serv(data):
+    json_list = []
+    json_output = {'servers': json_list}
+
+    for row in data:
+        json_dict = {'ip': row[0], 'port': row[1], 'state': row[2]}
+        json_list.append(json_dict)
+    return json_output
+
 def timer_transac():
     threading.Timer(30.0, timer_transac).start()
     try:
         with open('pay.json') as f:
             pay = json.load(f)
         # print(pay)
-
-
         response = requests.get('https://donatepay.ru/api/v1/transactions?access_token={}'.format(TOKEN))
         json_pay=response.json()
         if json_pay['status'] != 'success':
@@ -274,9 +305,10 @@ def timer_start():
         print(ex)
         get()
 
-get()
-threading.Timer(120.0, timer_start).start()
-threading.Timer(25.0, timer_transac).start()
+# get()
+# threading.Timer(120.0, timer_start).start()
+# threading.Timer(25.0, timer_transac).start()
+
 # timer_transac()
 # timer_start()
 if __name__ == '__main__':
