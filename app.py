@@ -305,9 +305,9 @@ def timer_start():
         print(ex)
         get()
 
-# get()
-# threading.Timer(120.0, timer_start).start()
-# threading.Timer(25.0, timer_transac).start()
+get()
+threading.Timer(120.0, timer_start).start()
+threading.Timer(25.0, timer_transac).start()
 
 # timer_transac()
 # timer_start()
