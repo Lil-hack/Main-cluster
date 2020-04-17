@@ -148,7 +148,7 @@ def win(name,money):
        print(ex)
        return ERROR
 
-@app.route('/server/add/<ip>')
+@app.route('/addserver/<ip>')
 def add(ip):
    try:
        db = get_db()
