@@ -148,6 +148,19 @@ def win(name,money):
        print(ex)
        return ERROR
 
+@app.route('/server/add/<ip>')
+def add(ip):
+   try:
+       db = get_db()
+       cursor = db.cursor()
+       sql_insert = "INSERT INTO servers VALUES ('{}',25565,0)".format(ip)
+       cursor.execute(sql_insert)
+       db.commit()
+       return OK
+   except Exception as ex:
+       print(ex)
+       return ERROR
+
 @app.route('/die/<name>')
 def die(name):
    try:
