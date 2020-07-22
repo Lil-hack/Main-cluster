@@ -1,15 +1,20 @@
 import json
 import threading
 import os
+import time
 
 from flask import Flask, jsonify, g, request, current_app
 import sqlite3
 import requests
 
-try:
-    from ssh_client import send, get
-except:
-    print('no paramilo')
+from sqllite import proc_start
+
+# try:
+#     from ssh_client import send, get
+# except:
+#     print('no paramilo')
+proc_start()
+time.sleep(3)
 app = Flask(__name__)
 
 file_name='minecraft.db'
@@ -309,17 +314,17 @@ def timer_transac():
     except Exception as ex:
         print(ex)
 
-def timer_start():
-    threading.Timer(120.0, timer_start).start()
-    print('start')
-    try:
-        send()
-    except Exception as ex:
-        print(ex)
-        get()
+# def timer_start():
+#     threading.Timer(120.0, timer_start).start()
+#     print('start')
+#     try:
+#         send()
+#     except Exception as ex:
+#         print(ex)
+#         get()
 
-get()
-threading.Timer(120.0, timer_start).start()
+
+# threading.Timer(120.0, timer_start).start()
 threading.Timer(25.0, timer_transac).start()
 
 # timer_transac()

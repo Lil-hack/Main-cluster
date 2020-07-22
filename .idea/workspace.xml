@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ec6d3c96-21d1-4d21-82bb-9f997735cebb" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/sqllite.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pay.json" beforeDir="false" afterPath="$PROJECT_DIR$/pay.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +37,7 @@
       <recent name="C:\Users\Zikboy\PycharmProjects\Main-cluster" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.app">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Main-cluster" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -55,9 +59,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="sqllite" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Main-cluster" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sqllite.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.app" />
+        <item itemvalue="Python.sqllite" />
       </list>
     </recent_temporary>
   </component>
@@ -268,7 +294,14 @@
       <option name="project" value="LOCAL" />
       <updated>1587085574897</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="servers">
+      <created>1587085971446</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1587085971446</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -281,111 +314,75 @@
     <option name="LAST_COMMIT_MESSAGE" value="servers" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="536" y="215" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586117779343">
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595454730850">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="536" y="215" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1586117779343" />
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586181616969">
+    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1595454730850" />
+    <state x="424" y="7" key="CommitChangelistDialog2" timestamp="1595455218774">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1586181616969" />
-    <state x="809" y="195" key="#xdebugger.evaluate" timestamp="1586382434375">
+    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1595455218774" />
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1595455184243">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="809" y="195" key="#xdebugger.evaluate/0.0.1536.824@0.0.1536.824" timestamp="1586382434375" />
-    <state x="424" y="7" key="CommitChangelistDialog2" timestamp="1587085572579">
+    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595455184243" />
+    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1595455184242">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="424" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1587085572579" />
-    <state width="773" height="466" key="DebuggerActiveHint" timestamp="1586112474807">
+    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595455184242" />
+    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1595455184242">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="773" height="466" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1586112474807" />
-    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1586108137657">
+    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595455184242" />
+    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1595455184243">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586108137657" />
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom" timestamp="1586898445323">
+    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595455184243" />
+    <state x="361" y="134" key="Vcs.Push.Dialog.v2" timestamp="1587085973319">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586898445323" />
-    <state width="1515" height="208" key="GridCell.Tab.0.center" timestamp="1586898445323">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1586898445323" />
-    <state width="1515" height="208" key="GridCell.Tab.0.left" timestamp="1586898445323">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1586898445323" />
-    <state width="1515" height="208" key="GridCell.Tab.0.right" timestamp="1586898445323">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="208" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1586898445323" />
-    <state width="1515" height="263" key="GridCell.Tab.1.bottom" timestamp="1586569343599">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="263" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1586569343599" />
-    <state width="1515" height="263" key="GridCell.Tab.1.center" timestamp="1586569343599">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="263" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1586569343599" />
-    <state width="1515" height="263" key="GridCell.Tab.1.left" timestamp="1586569343598">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="263" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1586569343598" />
-    <state width="1515" height="263" key="GridCell.Tab.1.right" timestamp="1586569343599">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="263" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1586569343599" />
-    <state x="361" y="134" key="Vcs.Push.Dialog.v2" timestamp="1587085579059">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="361" y="134" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1587085579059" />
+    <state x="361" y="134" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1587085973319" />
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1587066222778">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1587066222778" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1586425337087">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1586425337087" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app.py</url>
-          <line>42</line>
+          <line>47</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app.py</url>
-          <line>77</line>
+          <line>82</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app.py</url>
-          <line>249</line>
+          <line>254</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app.py</url>
-          <line>192</line>
+          <line>197</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app.py</url>
-          <line>201</line>
+          <line>206</line>
           <option name="timeStamp" value="10" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app.py</url>
-          <line>207</line>
+          <line>212</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/app.py</url>
-          <line>273</line>
+          <line>278</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
